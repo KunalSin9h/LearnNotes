@@ -4,6 +4,8 @@
 
 An Notion Like notes talking app with 2-layer AI assistance for better learning. Get your notes done in a breeze. Markdown supported.
 
+Project is live at [https://learnnotes.vercel.app/](https://learnnotes.vercel.app/)
+
 ### Local Setup
 
 Clone the repo:
