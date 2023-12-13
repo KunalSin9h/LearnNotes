@@ -1,4 +1,4 @@
-### ✨ This project is for [Quine Quest](https://quine.sh/quests/creator?questId=4), upvote the project [here](https://quine.sh/quests/creator?questId=4).
+### ✨ This project is for [Quine Quest](https://quine.sh/repo/KunalSin9h-LearnNotes-731176181), upvote the project [here](https://quine.sh/repo/KunalSin9h-LearnNotes-731176181).
 
 # LeanNotes
 
