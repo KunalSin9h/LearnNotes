@@ -13,6 +13,7 @@ export default function Home() {
     <div className="flex justify-end">
       <Toaster />
       <Editor
+        defaultValue={""}
         className={`h-[100vh] ${assist ? "basis-1/2" : "basis-full"}`}
         onUpdate={(edit) => {
           const text = edit?.getText();
