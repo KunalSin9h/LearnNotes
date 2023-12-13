@@ -22,7 +22,9 @@ export async function POST(req: Request) {
         3. Add more examples
         4. Add more references
         5. Add more links
-        6. help me understand the concept better`;
+        6. help me understand the concept better
+        
+        And remember respond with too many content, kep is short and crisp`;
   }
 
   const response = await openai.createChatCompletion({

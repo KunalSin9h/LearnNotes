@@ -5,6 +5,7 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Home() {
+  const [previousData, setPreviousData] = useState("");
   const [data, setData] = useState("");
   const [prompt, setPrompt] = useState("");
   const [assist, setAssist] = useState(true);
@@ -26,7 +27,7 @@ export default function Home() {
          `}
       >
         <textarea
-          className="p-4 bg-white border border-2 rounded-tl-xl border-black block w-full text-black overflow-auto"
+          className="p-4 bg-[#ECECEC] border border-2 rounded-tl-xl border-black block w-full text-black overflow-auto"
           placeholder={`${assist ? "What you want to do?" : ""}`}
           onChange={(e) => {
             e.preventDefault();
@@ -36,7 +37,7 @@ export default function Home() {
         <div className="relative right-12 top-4 inline-block">
           <div>
             <button
-              className={`border p-1 bg-gray-100 hover:bg-gray-200 rounded-lg ${
+              className={`p-1 bg-gray-200 hover:bg-gray-300 rounded-lg ${
                 assist ? "rotate-180" : ""
               } `}
               onClick={(e) => {
@@ -49,25 +50,24 @@ export default function Home() {
           </div>
           <div className="my-2">
             <button
-              className="p-1 hover:bg-gray-200 rounded-lg border border-black border-2"
+              className="p-1 hover:bg-gray-200 rounded-lg border border-black border-2 bg-green-100 hover:bg-green-200"
               onClick={(e) => {
                 e.preventDefault();
                 let contentTokens = document.getElementById("content-tokens");
-                if (contentTokens == undefined) {
-                  return;
-                }
-                contentTokens.innerHTML = "<p>Loading...</p>";
 
                 toast.success("Submitted!", {
                   position: "bottom-right",
                 });
+
+                const contentToSend = data.replaceAll(previousData, "");
+                setPreviousData(data);
 
                 fetch("/api/chat", {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({ content: data, prompt }),
+                  body: JSON.stringify({ content: contentToSend, prompt }),
                 })
                   .then(async (response) => {
                     toast.success("Getting response...", {
@@ -77,6 +77,17 @@ export default function Home() {
                     const reader = response.body?.getReader();
                     if (reader == undefined) {
                       return;
+                    }
+
+                    if (contentTokens == undefined) {
+                      return;
+                    }
+
+                    if (previousData !== "") {
+                      let newLineElement = document.createElement("span");
+                      newLineElement.innerText = "\n◦◦◦◦◦◦◦◦◦◦\n\n";
+
+                      contentTokens?.appendChild(newLineElement);
                     }
 
                     let haveResponse = false;
@@ -107,7 +118,7 @@ export default function Home() {
             </button>
           </div>
         </div>
-        <div id="content-tokens" className="py-4 px-2 text-md"></div>
+        <div id="content-tokens" className="px-16 text-md"></div>
       </div>
     </div>
   );
@@ -148,7 +159,7 @@ const ImproveIcon = () => (
     width="25"
     height="25"
     viewBox="0 0 15 15"
-    className="text-green-500"
+    className="text-green-600"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
