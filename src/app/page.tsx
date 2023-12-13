@@ -28,7 +28,7 @@ export default function Home() {
       >
         <textarea
           className="p-4 bg-[#ECECEC] border border-2 rounded-tl-xl border-black block w-full text-black overflow-auto"
-          placeholder={`${assist ? "What you want to do?" : ""}`}
+          placeholder={`${assist ? "What you want to do? (optional)" : ""}`}
           onChange={(e) => {
             e.preventDefault();
             setPrompt(e.target.value);
