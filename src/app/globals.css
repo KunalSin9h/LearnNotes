@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 *::-webkit-scrollbar {
-    display: none;
-  }
+	display: none;
+}
 
 html {
-  background-color: #F5F7F8;
+	background-color: #f5f7f8;
 }

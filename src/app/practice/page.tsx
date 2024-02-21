@@ -3,6 +3,7 @@
 import { Editor } from "novel";
 import { KeyboardEvent, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { getWordCount } from "../utils/getWordCount";
 
 export default function Home() {
 	const [previousData, setPreviousData] = useState("");
@@ -241,15 +242,3 @@ const ImproveIcon = () => (
 		></path>
 	</svg>
 );
-
-function getWordCount(text: string): number {
-	const tokens = text.split(" ");
-
-	let cnt = 0;
-	for (let token of tokens) {
-		if (token.length > 1) {
-			cnt++;
-		}
-	}
-	return cnt;
-}
