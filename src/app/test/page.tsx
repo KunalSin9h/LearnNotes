@@ -11,6 +11,8 @@ export default function Test() {
 	const [backspace, setBackspace] = useState(0);
 	const [deleteCount, setDeleteCount] = useState(0);
 
+	const [fontSz, setFontSz] = useState(16);
+
 	useEffect(() => {
 		function handleKeyDown(e: KeyboardEvent) {
 			if (e.key === "Backspace") {
@@ -34,11 +36,21 @@ export default function Test() {
 			<div className="absolute top-4 right-4 p-4 border rounded-lg bg-[#ECECEC]">
 				<div className="flex items-enter justify-between mb-4 text-lg font-mono">
 					<div className="flex items-center gap-2">
-						<button className="border border-black rounded px-1 bg-gray-200 hover:bg-gray-300 text-sm">
+						<button
+							className="border border-black rounded px-1 bg-gray-200 hover:bg-gray-300 text-sm"
+							onClick={() => {
+								setFontSz((f) => f + 10);
+							}}
+						>
 							A+
 						</button>
 
-						<button className="border border-black rounded px-1 bg-gray-200 hover:bg-gray-300 text-sm">
+						<button
+							className="border border-black rounded px-1 bg-gray-200 hover:bg-gray-300 text-sm"
+							onClick={() => {
+								setFontSz((f) => f - 10);
+							}}
+						>
 							A-
 						</button>
 					</div>
@@ -60,6 +72,9 @@ export default function Test() {
 			</div>
 
 			<textarea
+				style={{
+					fontSize: `${fontSz}px`,
+				}}
 				placeholder="Start Writing..."
 				className={`h-full w-full p-8`}
 				value={text}
