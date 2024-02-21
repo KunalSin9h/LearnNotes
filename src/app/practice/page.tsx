@@ -1,7 +1,7 @@
 "use client";
 
 import { Editor } from "novel";
-import { useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Home() {
@@ -9,18 +9,29 @@ export default function Home() {
 	const [data, setData] = useState("");
 	const [prompt, setPrompt] = useState("");
 	const [assist, setAssist] = useState(true);
+
+	const [word, setWord] = useState(0);
 	const [backspace, setBackspace] = useState(0);
 	const [deleteCount, setDeleteCount] = useState(0);
 
-	document.addEventListener("keydown", (e) => {
-		const keyPress = e.key;
+	useEffect(() => {
+		function handleKeyDown(e: KeyboardEvent) {
+			if (e.key === "Backspace") {
+				setBackspace((b) => b + 1);
+			}
 
-		if (keyPress === "Backspace") {
-			setBackspace(backspace + 1);
+			if (e.key === "Delete") {
+				setDeleteCount((d) => d + 1);
+			}
 		}
-		if (keyPress === "Delete") {
-			setDeleteCount(deleteCount + 1);
-		}
+
+		// @ts-expect-error
+		document.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			//@ts-expect-error
+			document.removeEventListener("keydown", handleKeyDown);
+		};
 	});
 
 	return (
@@ -34,6 +45,7 @@ export default function Home() {
 				onUpdate={(edit) => {
 					const text = edit?.getText();
 					setData(text as string);
+					setWord(getWordCount(text as string));
 				}}
 			/>
 			<div
@@ -53,6 +65,9 @@ export default function Home() {
 					<p>
 						Delete:{" "}
 						<strong className="font-mono">{deleteCount}</strong>
+					</p>
+					<p>
+						Words: <strong className="font-mono">{word}</strong>
 					</p>
 				</div>
 				<textarea
@@ -226,3 +241,15 @@ const ImproveIcon = () => (
 		></path>
 	</svg>
 );
+
+function getWordCount(text: string): number {
+	const tokens = text.split(" ");
+
+	let cnt = 0;
+	for (let token of tokens) {
+		if (token.length > 1) {
+			cnt++;
+		}
+	}
+	return cnt;
+}
