@@ -8,7 +8,20 @@ export default function Home() {
 	const [previousData, setPreviousData] = useState("");
 	const [data, setData] = useState("");
 	const [prompt, setPrompt] = useState("");
-	const [assist, setAssist] = useState(false);
+	const [assist, setAssist] = useState(true);
+	const [backspace, setBackspace] = useState(0);
+	const [deleteCount, setDeleteCount] = useState(0);
+
+	document.addEventListener("keydown", (e) => {
+		const keyPress = e.key;
+
+		if (keyPress === "Backspace") {
+			setBackspace(backspace + 1);
+		}
+		if (keyPress === "Delete") {
+			setDeleteCount(deleteCount + 1);
+		}
+	});
 
 	return (
 		<div className="flex justify-end">
@@ -28,8 +41,22 @@ export default function Home() {
         ${assist ? "basis-1/2" : "basis-0"}
          `}
 			>
+				<div
+					className={`border-l-2 border-r-2 border-black bg-[#ECECEC] p-4 w-full text-black flex items-center justify-around
+          ${!assist && "hidden"}
+        `}
+				>
+					<p>
+						Backspace:{" "}
+						<strong className="font-mono">{backspace}</strong>
+					</p>
+					<p>
+						Delete:{" "}
+						<strong className="font-mono">{deleteCount}</strong>
+					</p>
+				</div>
 				<textarea
-					className="absolute top-0 left-0 right-0 p-4 bg-[#ECECEC] border border-2 rounded-tl-xl border-black block text-black"
+					className="absolute left-0 right-0 p-4 bg-[#ECECEC] border border-2 rounded-bl-xl border-black block text-black"
 					placeholder={`${
 						assist ? "What you want to do? (optional)" : ""
 					}`}
