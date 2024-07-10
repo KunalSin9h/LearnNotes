@@ -82,6 +82,11 @@ export default function Test() {
 					setText(e.target.value);
 					setWord(getWordCount(e.target.value));
 				}}
+
+				autoComplete="off"
+				autoCorrect="off"
+				autoCapitalize="off"
+				spellCheck={false}
 			/>
 		</div>
 	);
