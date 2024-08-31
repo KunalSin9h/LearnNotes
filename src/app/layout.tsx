@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Lean Notes",
-  description: "Lean anything while writing notes",
+  title: "Technocrats TNP Cell Essay Writing",
+  description: "Technocrats TNP Cell Essay Writing",
   icons: "/favicon.png",
 };
 

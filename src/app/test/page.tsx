@@ -11,9 +11,13 @@ export default function Test() {
 	const [backspace, setBackspace] = useState(0);
 	const [deleteCount, setDeleteCount] = useState(0);
 
+	const [spelling, setSpelling] = useState(false);
+
 	const [fontSz, setFontSz] = useState(16);
 
 	useEffect(() => {
+		setText(localStorage.getItem("text") || "")
+
 		function handleKeyDown(e: KeyboardEvent) {
 			if (e.key === "Backspace") {
 				setBackspace((b) => b + 1);
@@ -50,6 +54,7 @@ export default function Test() {
 							onClick={() => {
 								setFontSz((f) => f - 10);
 							}}
+
 						>
 							A-
 						</button>
@@ -69,6 +74,17 @@ export default function Test() {
 						Words: <strong className="font-mono">{word}</strong>
 					</p>
 				</div>
+
+				<div className="mt-4 flex items-center justify-center gap-4">
+						<button className="py-1 px-2 rounded bg-blue-400" onClick={() => {
+							localStorage.setItem("text", "");
+							setText("")
+						}}>Clear Text</button>
+
+						<button className={`py-1 px-2 rounded ${spelling === true ? "bg-green-400" : "bg-red-400"}`} onClick={() => {
+							setSpelling(!spelling);
+						}}>{spelling === true ? "Hide" : "Show"} Spellings</button>
+				</div>
 			</div>
 
 			<textarea
@@ -81,12 +97,16 @@ export default function Test() {
 				onChange={(e) => {
 					setText(e.target.value);
 					setWord(getWordCount(e.target.value));
+					localStorage.setItem("text", e.target.value)
 				}}
 
 				autoComplete="off"
 				autoCorrect="off"
 				autoCapitalize="off"
-				spellCheck={false}
+				spellCheck={spelling}
+
+				rows={100}
+				cols={100}
 			/>
 		</div>
 	);
